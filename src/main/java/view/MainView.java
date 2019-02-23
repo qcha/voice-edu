@@ -14,6 +14,7 @@ import view.recorder.VoiceRecorderViewModel;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MainView extends GridPane {
     private final MainViewModel viewModel;
@@ -26,7 +27,8 @@ public class MainView extends GridPane {
     private ToggleGroup radioButtonsToggle;
     private RadioButton rb1;
     private RadioButton rb2;
-    private RadioButton rb3;
+    private Button plusBtn;
+    private VBox radioButtons = new VBox();
 
     private TextArea logPanel;
 
@@ -42,10 +44,9 @@ public class MainView extends GridPane {
 
         initUserRadioButton();
 
-        VBox vBox = new VBox();
-        vBox.setSpacing(10);
-        vBox.getChildren().addAll(rb1, rb2, rb3);
-        add(vBox, 0, 0);
+        radioButtons.setSpacing(10);
+        radioButtons.getChildren().addAll(plusBtn, rb1, rb2);
+        add(radioButtons, 0, 1);
 
         initButtonPanel();
 
@@ -53,12 +54,12 @@ public class MainView extends GridPane {
 
         initLogPanel();
 
-        add(logPanel, 0, 4, 15, 10);
+        add(logPanel, 4, 2, 5, 5);
 
         voiceRecorderViewModel = new VoiceRecorderViewModel(1);
         voiceRecorderView = new VoiceRecorderView(voiceRecorderViewModel);
 
-        add(voiceRecorderView, 0, 1);
+        add(voiceRecorderView, 0, 0);
     }
 
     private void initLogPanel() {
@@ -67,6 +68,8 @@ public class MainView extends GridPane {
 
     private void initUserRadioButton() {
         radioButtonsToggle = new ToggleGroup();
+
+        plusBtn = new Button("+");
 
         rb1 = new RadioButton("Голос 1");
         rb1.setId("1");
@@ -77,9 +80,16 @@ public class MainView extends GridPane {
         rb2.setId("2");
         rb2.setToggleGroup(radioButtonsToggle);
 
-        rb3 = new RadioButton("Голос 3");
-        rb3.setId("3");
-        rb3.setToggleGroup(radioButtonsToggle);
+        AtomicInteger i = new AtomicInteger(3);
+        plusBtn.setOnAction(e -> {
+            if (i.get() <= 7) {
+                RadioButton rb = new RadioButton("Голос " + i);
+                rb.setId(String.valueOf(i.getAndIncrement()));
+                rb.setToggleGroup(radioButtonsToggle);
+                radioButtons.getChildren().add(rb);
+            }
+        });
+
 
         radioButtonsToggle.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
             if (radioButtonsToggle.getSelectedToggle() != null) {

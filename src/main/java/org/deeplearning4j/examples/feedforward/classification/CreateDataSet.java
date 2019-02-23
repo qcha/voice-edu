@@ -19,16 +19,16 @@ public class CreateDataSet {
         String sourceDir = System.getProperty("user.dir") + "\\src\\main\\resources";
 
         System.out.println("Create Train Set from Folder: ");
-        System.out.println(sourceDir + "\\wave\\train");
-        String pathToWAVtrain = sourceDir + "\\wave\\train";
+        System.out.println(sourceDir + "\\wave");
+        String pathToWAVtrain = sourceDir + "\\wave";
         String pathToCSVtrain = sourceDir + "\\classification\\wav_data_train.csv";
         createCSVFile(sampleRate, pathToCSVtrain, pathToWAVtrain);
-
+/*
         System.out.println("Create Test Set from Folder: ");
         System.out.println(sourceDir + "\\wave\\test");
         String pathToWAVtest = sourceDir + "\\wave\\test";
         String pathToCSVtest = sourceDir + "\\classification\\wav_data_eval.csv";
-        createCSVFile(sampleRate, pathToCSVtest, pathToWAVtest);
+        createCSVFile(sampleRate, pathToCSVtest, pathToWAVtest);*/
     }
 
     private void createCSVFile(float sampleRate, String pathToCSV, String pathToWAV)

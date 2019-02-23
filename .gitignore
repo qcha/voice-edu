@@ -1,5 +1,7 @@
 *.class
 
+logs/
+
 # Package Files #
 *.jar
 *.war
