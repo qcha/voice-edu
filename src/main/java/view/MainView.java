@@ -29,7 +29,8 @@ public class MainView extends GridPane {
     private RadioButton rb2;
     private Button plusBtn;
     private Button minusBtn;
-    private VBox radioButtons = new VBox();
+    private VBox radioButtons1 = new VBox();
+    private VBox radioButtons2 = new VBox();
 
     private TextArea logPanel;
 
@@ -54,12 +55,16 @@ public class MainView extends GridPane {
 
         initUserRadioButton();
 
-        radioButtons.setSpacing(10);
         HBox controlRadio = new HBox();
         controlRadio.getChildren().addAll(plusBtn, minusBtn);
+        add(controlRadio, 0, 2);
 
-        radioButtons.getChildren().addAll(controlRadio, rb1, rb2);
-        add(radioButtons, 0, 2);
+        radioButtons1.setSpacing(10);
+        radioButtons2.setSpacing(10);
+        HBox radioButtons = new HBox(radioButtons1, radioButtons2);
+        radioButtons.setSpacing(25);
+        radioButtons1.getChildren().addAll(rb1, rb2);
+        add(radioButtons, 0, 3);
 
         add(logPanel, 4, 0, 5, 5);
     }
@@ -85,18 +90,20 @@ public class MainView extends GridPane {
 
         AtomicInteger i = new AtomicInteger(3);
         plusBtn.setOnAction(e -> {
-            if (i.get() <= 7) {
+            if (i.get() <= 6) {
                 RadioButton rb = new RadioButton("Голос " + i);
                 rb.setId(String.valueOf(i.getAndIncrement()));
                 rb.setToggleGroup(radioButtonsToggle);
-                radioButtons.getChildren().add(rb);
+                (i.get() > 4 ? radioButtons2 : radioButtons1).getChildren().add(rb);
             }
         });
 
         minusBtn.setOnAction(e -> {
             if (i.get() > 3) {
                 radioButtonsToggle.getToggles().remove(i.get() - 2);
-                radioButtons.getChildren().remove(i.getAndDecrement() - 1);
+                (i.get() > 4 ? radioButtons2 : radioButtons1).getChildren()
+                        .remove(i.get() - (i.get() > 4 ? 5 : 2));
+                i.getAndDecrement();
             }
         });
 
