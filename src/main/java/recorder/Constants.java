@@ -17,4 +17,8 @@ public final class Constants {
 
     public final static long TIMER = 420; // seconds
     public final static int DURATION = 5; // seconds
+
+    public final static String SOURCE_DIR = System.getProperty("user.dir") + "\\src\\main\\resources";
+    public final static String PATH_TO_WAV_TRAIN = SOURCE_DIR + "\\wave";
+    public final static String PATH_TO_CSV_TRAIN = SOURCE_DIR + "\\classification\\wav_data_train.csv";
 }

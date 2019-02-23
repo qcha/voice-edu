@@ -9,29 +9,28 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
+
+import static recorder.Constants.*;
 
 public class CreateDataSet {
+    private float sampleRate = FREQUENCY; //Частота дискретизации у каждой записи своя - если ошибку выдает - то подписывает, какую надо выставить
 
     public CreateDataSet() throws IOException, UnsupportedAudioFileException {
-        float sampleRate = 44100.0f; //Частота дискретизации у каждой записи своя - если ошибку выдает - то подписывает, какую надо выставить
         //  Обучающая выборка
         String sourceDir = System.getProperty("user.dir") + "\\src\\main\\resources";
 
         System.out.println("Create Train Set from Folder: ");
-        System.out.println(sourceDir + "\\wave");
-        String pathToWAVtrain = sourceDir + "\\wave";
-        String pathToCSVtrain = sourceDir + "\\classification\\wav_data_train.csv";
-        createCSVFile(sampleRate, pathToCSVtrain, pathToWAVtrain);
+        System.out.println(PATH_TO_WAV_TRAIN);
+        createCSVFile(PATH_TO_CSV_TRAIN, PATH_TO_WAV_TRAIN);
 /*
         System.out.println("Create Test Set from Folder: ");
-        System.out.println(sourceDir + "\\wave\\test");
-        String pathToWAVtest = sourceDir + "\\wave\\test";
-        String pathToCSVtest = sourceDir + "\\classification\\wav_data_eval.csv";
-        createCSVFile(sampleRate, pathToCSVtest, pathToWAVtest);*/
+        System.out.println(SOURCE_DIR + "\\wave\\test");
+        String pathToWAVtest = SOURCE_DIR + "\\wave\\test";
+        String pathToCSVtest = SOURCE_DIR + "\\classification\\wav_data_eval.csv";
+        createCSVFile(pathToCSVtest, pathToWAVtest);*/
     }
 
-    private void createCSVFile(float sampleRate, String pathToCSV, String pathToWAV)
+    private void createCSVFile(String pathToCSV, String pathToWAV)
             throws UnsupportedAudioFileException, IOException {
         File folder = new File(pathToWAV);
         try (FileWriter writer = new FileWriter(pathToCSV)) {
@@ -40,8 +39,8 @@ public class CreateDataSet {
             for (File entry : folderEntries) {
                 int userKey = Character.getNumericValue(entry.getName().charAt(0));
                 System.out.println("take " + entry.getName() + " - class of speaker is #" + String.valueOf(userKey - 1));
-                double[] audioSample = convertFileToDoubleArray(entry, sampleRate);
-                double[] q = extractFeatures(audioSample, sampleRate);
+                double[] audioSample = convertFileToDoubleArray(entry);
+                double[] q = extractFeatures(audioSample);
 
                 writer.append(String.valueOf(userKey - 1));
 
@@ -55,7 +54,7 @@ public class CreateDataSet {
     }
 
 
-    private double[] convertFileToDoubleArray(File voiceSampleFile, float sampleRate)
+    private double[] convertFileToDoubleArray(File voiceSampleFile)
             throws UnsupportedAudioFileException, IOException {
 
         AudioInputStream sample = AudioSystem.getAudioInputStream(voiceSampleFile);
@@ -68,7 +67,7 @@ public class CreateDataSet {
         return FileHelper.readAudioInputStream(sample);
     }
 
-    private double[] extractFeatures(double[] voiceSample, float sampleRate) {
+    private double[] extractFeatures(double[] voiceSample) {
 
         AutocorrellatedVoiceActivityDetector voiceDetector = new AutocorrellatedVoiceActivityDetector();
         Normalizer normalizer = new Normalizer();
