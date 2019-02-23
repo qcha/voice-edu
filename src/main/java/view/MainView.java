@@ -8,8 +8,12 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.deeplearning4j.examples.feedforward.classification.CreateDataSet;
 import view.recorder.VoiceRecorderView;
 import view.recorder.VoiceRecorderViewModel;
+
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 
 public class MainView extends GridPane {
     private final MainViewModel viewModel;
@@ -88,6 +92,16 @@ public class MainView extends GridPane {
     private void initButtonPanel() {
         training = new Button("Обучение");
         checking = new Button("Проверка");
+
+        training.setOnAction(e -> {
+            try {
+                new CreateDataSet();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } catch (UnsupportedAudioFileException e1) {
+                e1.printStackTrace();
+            }
+        });
 
         panel = new HBox();
         panel.getChildren().addAll(training, checking);

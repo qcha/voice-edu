@@ -13,25 +13,25 @@ import java.nio.file.Path;
 
 public class CreateDataSet {
 
-    public static void main(String[] args) throws Exception {
-
+    public CreateDataSet() throws IOException, UnsupportedAudioFileException {
         float sampleRate = 44100.0f; //Частота дискретизации у каждой записи своя - если ошибку выдает - то подписывает, какую надо выставить
         //  Обучающая выборка
         String sourceDir = System.getProperty("user.dir") + "\\src\\main\\resources";
+
         System.out.println("Create Train Set from Folder: ");
-        System.out.println(sourceDir + "\\allsounds\\train");
-        System.out.println("Create Test Set from Folder: ");
-        System.out.println(sourceDir + "\\allsounds\\test");
-        // Указываем желаемое расположение файлов и папок:
-        String pathToWAVtrain = sourceDir + "\\allsounds\\train";
+        System.out.println(sourceDir + "\\wave\\train");
+        String pathToWAVtrain = sourceDir + "\\wave\\train";
         String pathToCSVtrain = sourceDir + "\\classification\\wav_data_train.csv";
-        String pathToWAVtest = sourceDir + "\\allsounds\\test";
-        String pathToCSVtest = sourceDir + "\\classification\\wav_data_eval.csv";
         createCSVFile(sampleRate, pathToCSVtrain, pathToWAVtrain);
+
+        System.out.println("Create Test Set from Folder: ");
+        System.out.println(sourceDir + "\\wave\\test");
+        String pathToWAVtest = sourceDir + "\\wave\\test";
+        String pathToCSVtest = sourceDir + "\\classification\\wav_data_eval.csv";
         createCSVFile(sampleRate, pathToCSVtest, pathToWAVtest);
     }
 
-    public static void createCSVFile(float sampleRate, String pathToCSV, String pathToWAV)
+    private void createCSVFile(float sampleRate, String pathToCSV, String pathToWAV)
             throws UnsupportedAudioFileException, IOException {
         File folder = new File(pathToWAV);
         try (FileWriter writer = new FileWriter(pathToCSV)) {
@@ -55,7 +55,7 @@ public class CreateDataSet {
     }
 
 
-    private static double[] convertFileToDoubleArray(File voiceSampleFile, float sampleRate)
+    private double[] convertFileToDoubleArray(File voiceSampleFile, float sampleRate)
             throws UnsupportedAudioFileException, IOException {
 
         AudioInputStream sample = AudioSystem.getAudioInputStream(voiceSampleFile);
@@ -68,7 +68,7 @@ public class CreateDataSet {
         return FileHelper.readAudioInputStream(sample);
     }
 
-    private static double[] extractFeatures(double[] voiceSample, float sampleRate) {
+    private double[] extractFeatures(double[] voiceSample, float sampleRate) {
 
         AutocorrellatedVoiceActivityDetector voiceDetector = new AutocorrellatedVoiceActivityDetector();
         Normalizer normalizer = new Normalizer();
