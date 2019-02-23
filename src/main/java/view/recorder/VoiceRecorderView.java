@@ -8,6 +8,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
@@ -31,8 +33,6 @@ public class VoiceRecorderView extends BorderPane {
     private Duration time = Duration.ZERO;
     private Timeline timeline;
     private Label timerLabel;
-
-    private double length = 125;
 
     public VoiceRecorderView(VoiceRecorderViewModel viewModel) {
         this.voiceRecorderViewModel = viewModel;
@@ -69,12 +69,13 @@ public class VoiceRecorderView extends BorderPane {
     }
 
     private void initButtons() {
+        Image start = new Image(getClass().getResourceAsStream("/start.png"));
+        Image stop = new Image(getClass().getResourceAsStream("/stop.png"));
         recordBtn = new Button() {
             {
-                setText("Запись");
-                setPrefSize(length, length);
+                setGraphic(new ImageView(start));
                 setOnAction(event -> {
-                    File directory = new File("resources/wave");
+                    File directory = new File(System.getProperty("user.dir") + "\\src\\main\\resources");
 
                     if (!directory.exists()) {
                         directory.mkdir();
@@ -108,8 +109,7 @@ public class VoiceRecorderView extends BorderPane {
 
         stopBtn = new Button() {
             {
-                setText("Остановка");
-                setPrefSize(length, length);
+                setGraphic(new ImageView(stop));
                 setDisable(true);
                 setOnAction(e -> {
                     setDisable(true);

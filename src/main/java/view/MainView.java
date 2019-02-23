@@ -53,7 +53,7 @@ public class MainView extends GridPane {
 
         initLogPanel();
 
-        add(logPanel, 0, 6, 10, 10);
+        add(logPanel, 0, 4, 15, 10);
 
         voiceRecorderViewModel = new VoiceRecorderViewModel(1);
         voiceRecorderView = new VoiceRecorderView(voiceRecorderViewModel);
@@ -96,9 +96,7 @@ public class MainView extends GridPane {
         training.setOnAction(e -> {
             try {
                 new CreateDataSet();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } catch (UnsupportedAudioFileException e1) {
+            } catch (IOException | UnsupportedAudioFileException e1) {
                 e1.printStackTrace();
             }
         });
