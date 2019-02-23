@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -66,7 +67,8 @@ public class MainView extends GridPane {
         radioButtons1.getChildren().addAll(rb1, rb2);
         add(radioButtons, 0, 3);
 
-        add(logPanel, 4, 0, 5, 5);
+        AnchorPane logPane = new AnchorPane(logPanel);
+        add(logPane, 4, 0, 5, 5);
     }
 
     private void initLogPanel() {
