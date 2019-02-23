@@ -7,11 +7,15 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import view.recorder.VoiceRecorderView;
 import view.recorder.VoiceRecorderViewModel;
 
 public class MainView extends GridPane {
     private final MainViewModel viewModel;
+
+    private Button training;
+    private Button checking;
 
     private HBox panel;
 
@@ -22,6 +26,9 @@ public class MainView extends GridPane {
 
     private TextArea logPanel;
 
+    private VoiceRecorderViewModel voiceRecorderViewModel;
+    private VoiceRecorderView voiceRecorderView;
+
     public MainView(MainViewModel model) {
         this.viewModel = model;
 
@@ -31,9 +38,10 @@ public class MainView extends GridPane {
 
         initUserRadioButton();
 
-        add(rb1, 0, 0);
-        add(rb2, 0, 1);
-        add(rb3, 0, 2);
+        VBox vBox = new VBox();
+        vBox.setSpacing(10);
+        vBox.getChildren().addAll(rb1, rb2, rb3);
+        add(vBox, 0, 0);
 
         initButtonPanel();
 
@@ -43,9 +51,10 @@ public class MainView extends GridPane {
 
         add(logPanel, 0, 6, 10, 10);
 
-        VoiceRecorderView voiceRecorderView = new VoiceRecorderView(new VoiceRecorderViewModel(viewModel.getStage(), 0));
+        voiceRecorderViewModel = new VoiceRecorderViewModel(1);
+        voiceRecorderView = new VoiceRecorderView(voiceRecorderViewModel);
 
-        add(voiceRecorderView, 6, 1);
+        add(voiceRecorderView, 0, 1);
     }
 
     private void initLogPanel() {
@@ -56,30 +65,32 @@ public class MainView extends GridPane {
         radioButtonsToggle = new ToggleGroup();
 
         rb1 = new RadioButton("Голос 1");
+        rb1.setId("1");
         rb1.setToggleGroup(radioButtonsToggle);
         rb1.setSelected(true);
 
         rb2 = new RadioButton("Голос 2");
+        rb2.setId("2");
         rb2.setToggleGroup(radioButtonsToggle);
 
         rb3 = new RadioButton("Голос 3");
+        rb3.setId("3");
         rb3.setToggleGroup(radioButtonsToggle);
 
         radioButtonsToggle.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
             if (radioButtonsToggle.getSelectedToggle() != null) {
                 RadioButton button = (RadioButton) radioButtonsToggle.getSelectedToggle();
-                System.out.println("Button: " + button.getText());
+                voiceRecorderViewModel.setAttempt(Integer.valueOf(button.getId()));
             }
         });
     }
 
     private void initButtonPanel() {
-        Button recording = new Button("Запись");
-        Button training = new Button("Обучение");
-        Button checking = new Button("Проверка");
+        training = new Button("Обучение");
+        checking = new Button("Проверка");
 
         panel = new HBox();
-        panel.getChildren().addAll(recording, training, checking);
+        panel.getChildren().addAll(training, checking);
         panel.setSpacing(20);
     }
 }

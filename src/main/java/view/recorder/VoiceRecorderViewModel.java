@@ -1,19 +1,14 @@
 package view.recorder;
 
-import javafx.stage.Stage;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class VoiceRecorderViewModel {
     private int attempt;
-    private Stage stage;
 
-    public VoiceRecorderViewModel(Stage stage, int voiceNum) {
-        this.attempt = voiceNum;
-        this.stage = stage;
-    }
-
-    public void increaseAttempt() {
-        attempt++;
+    public VoiceRecorderViewModel(int attempt) {
+        this.attempt = attempt;
     }
 }
