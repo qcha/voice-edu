@@ -73,7 +73,6 @@ public class VoiceRecorderView extends BorderPane {
         Image stop = new Image(getClass().getResourceAsStream("/stop.png"));
         recordBtn = new Button() {
             {
-                voiceRecorderViewModel.setIsRecording(true);
                 setGraphic(new ImageView(start));
                 setOnAction(event -> {
                     File directory = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\wave");
@@ -83,6 +82,7 @@ public class VoiceRecorderView extends BorderPane {
                     }
 
                     setDisable(true);
+                    voiceRecorderViewModel.setIsRecording(true);
                     stopBtn.setDisable(false);
 
                     try {
@@ -110,11 +110,11 @@ public class VoiceRecorderView extends BorderPane {
 
         stopBtn = new Button() {
             {
-                voiceRecorderViewModel.setIsRecording(false);
                 setGraphic(new ImageView(stop));
                 setDisable(true);
                 setOnAction(e -> {
                     setDisable(true);
+                    voiceRecorderViewModel.setIsRecording(false);
                     recordBtn.setDisable(false);
                     recordingLabel.setVisible(false);
                     controller.stopRecord();
