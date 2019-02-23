@@ -75,7 +75,7 @@ public class VoiceRecorderView extends BorderPane {
             {
                 setGraphic(new ImageView(start));
                 setOnAction(event -> {
-                    File directory = new File(System.getProperty("user.dir") + "\\src\\main\\resource\\wave");
+                    File directory = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\wave");
 
                     if (!directory.exists()) {
                         directory.mkdir();
