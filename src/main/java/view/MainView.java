@@ -39,28 +39,29 @@ public class MainView extends GridPane {
     public MainView(MainViewModel model) {
         this.viewModel = model;
         voiceRecorderViewModel = new VoiceRecorderViewModel(1);
+        voiceRecorderView = new VoiceRecorderView(voiceRecorderViewModel);
 
         setPadding(new Insets(20));
         setHgap(25);
         setVgap(15);
 
+        initLogPanel();
+        initButtonPanel();
+
+        add(voiceRecorderView, 0, 0);
+
+        add(panel, 0, 1);
+
         initUserRadioButton();
 
         radioButtons.setSpacing(10);
-        radioButtons.getChildren().addAll(new HBox(plusBtn, minusBtn), rb1, rb2);
-        add(radioButtons, 0, 1);
+        HBox controlRadio = new HBox();
+        controlRadio.getChildren().addAll(plusBtn, minusBtn);
 
-        initButtonPanel();
+        radioButtons.getChildren().addAll(controlRadio, rb1, rb2);
+        add(radioButtons, 0, 2);
 
-        add(panel, 6, 0);
-
-        initLogPanel();
-
-        add(logPanel, 4, 2, 5, 5);
-
-        voiceRecorderView = new VoiceRecorderView(voiceRecorderViewModel);
-
-        add(voiceRecorderView, 0, 0);
+        add(logPanel, 4, 0, 5, 5);
     }
 
     private void initLogPanel() {
@@ -91,6 +92,7 @@ public class MainView extends GridPane {
                 radioButtons.getChildren().add(rb);
             }
         });
+
         minusBtn.setOnAction(e -> {
             if (i.get() > 3) {
                 radioButtonsToggle.getToggles().remove(i.get() - 2);
@@ -124,6 +126,6 @@ public class MainView extends GridPane {
 
         panel = new HBox();
         panel.getChildren().addAll(training, checking);
-        panel.setSpacing(20);
+        panel.setSpacing(10);
     }
 }
