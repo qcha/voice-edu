@@ -37,6 +37,7 @@ public class MainView extends GridPane {
 
     public MainView(MainViewModel model) {
         this.viewModel = model;
+        voiceRecorderViewModel = new VoiceRecorderViewModel(1);
 
         setPadding(new Insets(20));
         setHgap(25);
@@ -56,7 +57,6 @@ public class MainView extends GridPane {
 
         add(logPanel, 4, 2, 5, 5);
 
-        voiceRecorderViewModel = new VoiceRecorderViewModel(1);
         voiceRecorderView = new VoiceRecorderView(voiceRecorderViewModel);
 
         add(voiceRecorderView, 0, 0);
@@ -102,6 +102,9 @@ public class MainView extends GridPane {
     private void initButtonPanel() {
         training = new Button("Обучение");
         checking = new Button("Проверка");
+
+        training.disableProperty().bind(voiceRecorderViewModel.getIsRecording());
+        checking.disableProperty().bind(voiceRecorderViewModel.getIsRecording());
 
         training.setOnAction(e -> {
             try {
