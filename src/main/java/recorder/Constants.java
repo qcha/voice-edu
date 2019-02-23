@@ -1,4 +1,4 @@
-package qcha.voicerecorder;
+package recorder;
 
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;

@@ -1,14 +1,15 @@
-package qcha.voicerecorder.view;
+package view.recorder;
 
 import javafx.stage.Stage;
 import lombok.Getter;
 
 @Getter
 public class VoiceRecorderViewModel {
+    private int attempt;
     private Stage stage;
-    private int attempt = 1;
 
-    VoiceRecorderViewModel(Stage stage) {
+    public VoiceRecorderViewModel(Stage stage, int voiceNum) {
+        this.attempt = voiceNum;
         this.stage = stage;
     }
 

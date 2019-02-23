@@ -1,4 +1,4 @@
-package qcha.voicerecorder.view;
+package view.recorder;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,12 +16,12 @@ import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.util.Duration;
 import lombok.extern.slf4j.Slf4j;
-import qcha.voicerecorder.AudioController;
+import recorder.AudioController;
 
 import javax.sound.sampled.LineUnavailableException;
 import java.io.File;
 
-import static qcha.voicerecorder.Constants.TIMER;
+import static recorder.Constants.TIMER;
 
 @Slf4j
 public class VoiceRecorderView extends BorderPane {
@@ -59,7 +59,7 @@ public class VoiceRecorderView extends BorderPane {
             Duration duration = ((KeyFrame) t.getSource()).getTime();
             time = time.add(duration);
             timeSeconds.set(time.toSeconds());
-            if (Math.abs(time.toSeconds() - TIMER) < 1E-6){ // compare doubles
+            if (Math.abs(time.toSeconds() - TIMER) < 1E-6) { // compare doubles
                 log.debug("Timer over.");
                 stopBtn.fire();
             }

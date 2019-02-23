@@ -1,4 +1,4 @@
-package qcha.voicerecorder;
+package recorder;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -6,8 +6,8 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-import static qcha.voicerecorder.Constants.AUDIO_FORMAT;
-import static qcha.voicerecorder.Constants.AUDIO_TYPE;
+import static recorder.Constants.AUDIO_FORMAT;
+import static recorder.Constants.AUDIO_TYPE;
 
 @Slf4j
 public class WaveAudioRecording extends Thread implements AutoCloseable {

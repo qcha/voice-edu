@@ -1,4 +1,4 @@
-package qcha.voicerecorder;
+package recorder;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -6,7 +6,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import java.io.*;
 
-import static qcha.voicerecorder.Constants.*;
+import static recorder.Constants.*;
 
 @Slf4j
 public class AudioSplitter implements AutoCloseable {
