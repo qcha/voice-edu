@@ -74,11 +74,15 @@ public class MainView extends GridPane {
         add(radioButtons, 0, 3);
 
         AnchorPane logPane = new AnchorPane(logPanel);
-        add(logPane, 4, 0, 5, 5);
+        AnchorPane.setRightAnchor(logPanel, 1.0);
+        AnchorPane.setBottomAnchor(logPanel, 1.0);
+        AnchorPane.setTopAnchor(logPanel, 1.0);
+        add(logPane, 4, 0, 10, 10);
     }
 
     private void initLogPanel() {
         logPanel = new TextArea();
+        logPanel.setEditable(false);
 
         OutputStream os = new TextAreaOutputStream(logPanel);
         MyStaticOutputStreamAppender.setStaticOutputStream(os);
