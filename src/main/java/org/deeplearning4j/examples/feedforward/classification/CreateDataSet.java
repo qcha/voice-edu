@@ -42,6 +42,7 @@ public class CreateDataSet {
 
     public static void createCSVFile(String pathToCSV, String pathToWAV)
             throws UnsupportedAudioFileException, IOException {
+        log.info("Create Set from Folder: {}", pathToWAV);
         File folder = new File(pathToWAV);
         try (FileWriter writer = new FileWriter(pathToCSV)) {
             writer.write("");
@@ -62,6 +63,7 @@ public class CreateDataSet {
                 writer.append("\n");
             }
         }
+        log.info("File saved to {}", pathToCSV);
     }
 
 

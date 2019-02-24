@@ -158,14 +158,16 @@ public class MainView extends GridPane {
         });
 
         checking.setOnAction(e -> {
-            try {
-                if (CreateDataSet.getNumOutputs() != 0) {
-                    log.info("Starting...");
-                    new MLPClassifierLinear(CreateDataSet.getNumOutputs());
-                }
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+            Thread t = new Thread(() -> {
+               try {
+                   log.info("Starting...");
+                   new MLPClassifierLinear(CreateDataSet.getNumOutputs());
+               } catch (Exception e1) {
+                   log.error("Error: {}", e1);
+               }
+            });
+
+            t.start();
         });
 
         panel = new HBox();
