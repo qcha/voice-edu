@@ -34,8 +34,8 @@ public class CreateDataSet {
         createCSVFile(PATH_TO_CSV_TRAIN, PATH_TO_WAV_TRAIN);
 
         System.out.println("Create Test Set from Folder: ");
-        System.out.println(SOURCE_DIR + "\\wave\\test");
-        String pathToWAVtest = SOURCE_DIR + "\\wave\\test";
+        System.out.println(SOURCE_DIR + "\\allsound\\test");
+        String pathToWAVtest = SOURCE_DIR + "\\allsound\\test";
         String pathToCSVtest = SOURCE_DIR + "\\classification\\wav_data_eval.csv";
         createCSVFile(pathToCSVtest, pathToWAVtest);
     }*/

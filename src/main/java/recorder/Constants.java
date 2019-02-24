@@ -19,12 +19,12 @@ public final class Constants {
     public final static long TIMER = 420; // seconds
     public final static int DURATION = 5; // seconds
 
-    private final static String FPS = File.pathSeparator;
-    private final static String CSV_DIR = Constants.class.getClassLoader().getResource("classification").getPath();
-    public final static String SOURCE_DIR = "working";
-    public final static String PATH_TO_WAV_TRAIN = SOURCE_DIR;
+    private final static String FPS = File.separator;
+    private final static String CSV_DIR = "src" + FPS + "main" + FPS + "resources" + FPS + "classification";
+    public final static String SOURCE_DIR = "src" + FPS + "main" + FPS + "resources";
+    public final static String PATH_TO_WAV_TRAIN = SOURCE_DIR + FPS + "allsounds" + FPS + "train";
     public final static String PATH_TO_CSV_TRAIN = CSV_DIR + FPS + "wav_data_train.csv";
-    public final static String PATH_TO_WAV_TEST = SOURCE_DIR;
+    public final static String PATH_TO_WAV_TEST = SOURCE_DIR + FPS + "allsounds" + FPS + "test";
     public final static String PATH_TO_CSV_TEST = CSV_DIR + FPS + "wav_data_eval.csv";
 
     public final static int NEURONS = 50; //кол-во входных нейронов, зависит от структуры записи
