@@ -120,7 +120,8 @@ public class MainView extends GridPane {
         });
 
         minusBtn.setOnAction(e -> {
-            if (i.get() > 4) {
+            if (i.get() > 4 &&
+                    !radioButtonsToggle.getSelectedToggle().equals(radioButtonsToggle.getToggles().get(i.get() - 2))) {
                 radioButtonsToggle.getToggles().remove(i.get() - 2);
                 radioButtons2.getChildren().remove(i.get() -  5);
                 i.getAndDecrement();
