@@ -19,6 +19,7 @@ import recorder.AudioController;
 import javax.sound.sampled.LineUnavailableException;
 import java.io.File;
 
+import static recorder.Constants.SOURCE_DIR;
 import static recorder.Constants.TIMER;
 
 @Slf4j
@@ -75,7 +76,7 @@ public class VoiceRecorderView extends BorderPane {
             {
                 setGraphic(new ImageView(start));
                 setOnAction(event -> {
-                    File directory = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\wave");
+                    File directory = new File(SOURCE_DIR);
 
                     if (!directory.exists()) {
                         directory.mkdir();
@@ -102,7 +103,7 @@ public class VoiceRecorderView extends BorderPane {
 
                     recordingLabel.setVisible(true);
                     controller.startRecord();
-                    log.info("Start timer.");
+                    log.info("Начата запись для голоса " + voiceRecorderViewModel.getAttempt());
                     timeline.play();
                 });
             }
@@ -119,7 +120,7 @@ public class VoiceRecorderView extends BorderPane {
                     recordingLabel.setVisible(false);
                     controller.stopRecord();
                     time = Duration.ZERO;
-                    log.info("Stop timer.");
+                    log.info("Запись для голоса " + voiceRecorderViewModel.getAttempt() + " закончена");
                     timeline.stop();
                 });
             }

@@ -31,8 +31,9 @@ public class AudioSplitter implements AutoCloseable {
             while ((bytes = audioInputStream.read(buf)) > 0) {
                 try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(buf);
                      AudioInputStream ais = new AudioInputStream(byteArrayInputStream, AUDIO_FORMAT, bytes / frameSize)) {
-                    AudioSystem.write(ais, AUDIO_TYPE, new File(storageDir,
-                            String.format(i < 10 ? "%d0%d.wav" : "%d%d.wav", attempt, i)));
+                    String child = String.format(i < 10 ? "%d0%d.wav" : "%d%d.wav", attempt, i);
+                    log.info("Файл " + child + " создан");
+                    AudioSystem.write(ais, AUDIO_TYPE, new File(storageDir, child));
                     i++;
                 }
             }
