@@ -123,7 +123,7 @@ public class MainView extends GridPane {
             if (i.get() > 4 &&
                     !radioButtonsToggle.getSelectedToggle().equals(radioButtonsToggle.getToggles().get(i.get() - 2))) {
                 radioButtonsToggle.getToggles().remove(i.get() - 2);
-                radioButtons2.getChildren().remove(i.get() -  5);
+                radioButtons2.getChildren().remove(i.get() - 5);
                 i.getAndDecrement();
             }
         });
@@ -158,14 +158,16 @@ public class MainView extends GridPane {
         });
 
         checking.setOnAction(e -> {
-            try {
-                if (CreateDataSet.getNumOutputs() != 0) {
+            Thread t = new Thread(() -> {
+                try {
                     log.info("Starting...");
                     new MLPClassifierLinear(CreateDataSet.getNumOutputs());
+                } catch (Exception e1) {
+                    log.error("Error: {}", e1);
                 }
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+            });
+
+            t.start();
         });
 
         panel = new HBox();
