@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import logging.MyStaticOutputStreamAppender;
+import lombok.extern.slf4j.Slf4j;
 import org.deeplearning4j.examples.feedforward.classification.CreateDataSet;
 import org.deeplearning4j.examples.feedforward.classification.MLPClassifierLinear;
 import view.recorder.VoiceRecorderView;
@@ -23,6 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static recorder.Constants.PATH_TO_CSV_TRAIN;
 import static recorder.Constants.PATH_TO_WAV_TRAIN;
 
+@Slf4j
 public class MainView extends GridPane {
     private final MainViewModel viewModel;
 
@@ -143,11 +145,15 @@ public class MainView extends GridPane {
         checking.disableProperty().bind(voiceRecorderViewModel.getIsRecording());
 
         training.setOnAction(e -> {
-            try {
-                CreateDataSet.createCSVFile(PATH_TO_CSV_TRAIN, PATH_TO_WAV_TRAIN);
-            } catch (IOException | UnsupportedAudioFileException e1) {
-                e1.printStackTrace();
-            }
+            Thread t = new Thread(() -> {
+                try {
+                    CreateDataSet.createCSVFile(PATH_TO_CSV_TRAIN, PATH_TO_WAV_TRAIN);
+                } catch (UnsupportedAudioFileException | IOException e1) {
+                    log.error("Error: {}", e1);
+                }
+            });
+
+            t.start();
         });
 
         checking.setOnAction(e -> {
