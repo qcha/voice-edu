@@ -26,20 +26,6 @@ public class CreateDataSet {
         return numOutputs.size();
     }
 
-    /*public CreateDataSet() throws IOException, UnsupportedAudioFileException {
-        //  Обучающая выборка
-
-        System.out.println("Create Train Set from Folder: ");
-        System.out.println(PATH_TO_WAV_TRAIN);
-        createCSVFile(PATH_TO_CSV_TRAIN, PATH_TO_WAV_TRAIN);
-
-        System.out.println("Create Test Set from Folder: ");
-        System.out.println(SOURCE_DIR + "\\allsound\\test");
-        String pathToWAVtest = SOURCE_DIR + "\\allsound\\test";
-        String pathToCSVtest = SOURCE_DIR + "\\classification\\wav_data_eval.csv";
-        createCSVFile(pathToCSVtest, pathToWAVtest);
-    }*/
-
     public static void createCSVFile(String pathToCSV, String pathToWAV)
             throws UnsupportedAudioFileException, IOException {
         log.info("Create Set from Folder: {}", pathToWAV);
