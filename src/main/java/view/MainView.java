@@ -134,8 +134,6 @@ public class MainView extends GridPane {
         training.disableProperty().bind(voiceRecorderViewModel.getIsRecording());
         checking.disableProperty().bind(voiceRecorderViewModel.getIsRecording());
 
-
-
         training.setOnAction(e -> {
             try {
                 CreateDataSet.createCSVFile(PATH_TO_CSV_TRAIN, PATH_TO_WAV_TRAIN);
