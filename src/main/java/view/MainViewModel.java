@@ -1,5 +1,6 @@
 package view;
 
+import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -27,6 +28,8 @@ class TextAreaOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        textArea.appendText(String.valueOf((char) b));
+        Platform.runLater(() -> {
+            textArea.appendText(String.valueOf((char) b));
+        });
     }
 }
