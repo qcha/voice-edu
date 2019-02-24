@@ -103,7 +103,7 @@ public class VoiceRecorderView extends BorderPane {
 
                     recordingLabel.setVisible(true);
                     controller.startRecord();
-                    log.info("Начата запись для голоса " + voiceRecorderViewModel.getAttempt());
+                    log.info("Start recording voice " + voiceRecorderViewModel.getAttempt());
                     timeline.play();
                 });
             }
@@ -120,7 +120,7 @@ public class VoiceRecorderView extends BorderPane {
                     recordingLabel.setVisible(false);
                     controller.stopRecord();
                     time = Duration.ZERO;
-                    log.info("Запись для голоса " + voiceRecorderViewModel.getAttempt() + " закончена");
+                    log.info("Recording voice " + voiceRecorderViewModel.getAttempt() + " completed");
                     timeline.stop();
                 });
             }
