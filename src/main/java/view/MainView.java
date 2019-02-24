@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static recorder.Constants.PATH_TO_CSV_TRAIN;
-import static recorder.Constants.PATH_TO_WAV_TRAIN;
+import static recorder.Constants.*;
 
 @Slf4j
 public class MainView extends GridPane {
@@ -148,6 +147,7 @@ public class MainView extends GridPane {
             Thread t = new Thread(() -> {
                 try {
                     CreateDataSet.createCSVFile(PATH_TO_CSV_TRAIN, PATH_TO_WAV_TRAIN);
+                    CreateDataSet.createCSVFile(PATH_TO_CSV_TEST, PATH_TO_WAV_TEST);
                 } catch (UnsupportedAudioFileException | IOException e1) {
                     log.error("Error: {}", e1);
                 }
@@ -159,6 +159,7 @@ public class MainView extends GridPane {
         checking.setOnAction(e -> {
             try {
                 if (CreateDataSet.getNumOutputs() != 0) {
+                    log.info("Starting...");
                     new MLPClassifierLinear(CreateDataSet.getNumOutputs());
                 }
             } catch (Exception e1) {
