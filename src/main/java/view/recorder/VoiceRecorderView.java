@@ -55,7 +55,7 @@ public class VoiceRecorderView extends BorderPane {
             time = time.add(duration);
             timeSeconds.set(time.toSeconds());
             if (Math.abs(time.toSeconds() - TIMER) < 1E-6) { // compare doubles
-                log.debug("Timer over.");
+                log.info("Timer over.");
                 stopBtn.fire();
             }
         })
@@ -102,7 +102,7 @@ public class VoiceRecorderView extends BorderPane {
 
                     recordingLabel.setVisible(true);
                     controller.startRecord();
-                    log.debug("Start timer.");
+                    log.info("Start timer.");
                     timeline.play();
                 });
             }
@@ -119,7 +119,7 @@ public class VoiceRecorderView extends BorderPane {
                     recordingLabel.setVisible(false);
                     controller.stopRecord();
                     time = Duration.ZERO;
-                    log.debug("Stop timer.");
+                    log.info("Stop timer.");
                     timeline.stop();
                 });
             }
