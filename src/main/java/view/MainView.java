@@ -139,7 +139,7 @@ public class MainView extends GridPane {
 
     private void initButtonPanel() {
         training = new Button("Обучение");
-        checking = new Button("Проверка");
+        checking = new Button("Распознать");
 
         training.disableProperty().bind(voiceRecorderViewModel.getIsRecording());
         checking.disableProperty().bind(voiceRecorderViewModel.getIsRecording());
