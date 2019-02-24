@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import logging.MyStaticOutputStreamAppender;
 import org.deeplearning4j.examples.feedforward.classification.CreateDataSet;
 import org.deeplearning4j.examples.feedforward.classification.MLPClassifierLinear;
 import view.recorder.VoiceRecorderView;
@@ -16,6 +17,7 @@ import view.recorder.VoiceRecorderViewModel;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static recorder.Constants.PATH_TO_CSV_TRAIN;
@@ -76,7 +78,10 @@ public class MainView extends GridPane {
     }
 
     private void initLogPanel() {
-        logPanel = new TextArea("A lot of text");
+        logPanel = new TextArea();
+
+        OutputStream os = new TextAreaOutputStream(logPanel);
+        MyStaticOutputStreamAppender.setStaticOutputStream(os);
     }
 
     private void initUserRadioButton() {

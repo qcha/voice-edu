@@ -1,5 +1,6 @@
 package org.deeplearning4j.examples.feedforward.classification;
 
+import lombok.extern.slf4j.Slf4j;
 import org.deeplearning4j.examples.feedforward.classification.soundProcessing.*;
 
 import javax.sound.sampled.AudioFormat;
@@ -12,9 +13,12 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static recorder.Constants.*;
+import static recorder.Constants.FREQUENCY;
+import static recorder.Constants.NEURONS;
 
+@Slf4j
 public class CreateDataSet {
+
     private static float sampleRate = FREQUENCY; //Частота дискретизации у каждой записи своя - если ошибку выдает - то подписывает, какую надо выставить
     private static Set<String> numOutputs = new HashSet<>(); //кол-во классов (голосов) кол-во голосов для распознования (в CSV файле)
 
@@ -45,7 +49,7 @@ public class CreateDataSet {
             for (File entry : folderEntries) {
                 int userKey = Character.getNumericValue(entry.getName().charAt(0));
                 numOutputs.add(String.valueOf(userKey - 1));
-                System.out.println("take " + entry.getName() + " - class of speaker is #" + (userKey - 1));
+                log.info("take " + entry.getName() + " - class of speaker is #" + (userKey - 1));
                 double[] audioSample = convertFileToDoubleArray(entry);
                 double[] q = extractFeatures(audioSample);
 

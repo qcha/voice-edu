@@ -1,5 +1,6 @@
 package org.deeplearning4j.examples.feedforward.classification;
 
+import lombok.extern.slf4j.Slf4j;
 import org.datavec.api.records.reader.RecordReader;
 import org.datavec.api.records.reader.impl.csv.CSVRecordReader;
 import org.datavec.api.split.FileSplit;
@@ -36,6 +37,7 @@ import static recorder.Constants.*;
  * @author Alex Black (added plots)
  *
  */
+@Slf4j
 public class MLPClassifierLinear {
 
 
@@ -85,7 +87,7 @@ public class MLPClassifierLinear {
             model.fit( trainIter );
         }
 
-        System.out.println("Evaluate model....");
+        log.info("Evaluate model....");
         Evaluation eval = new Evaluation(numOutputs);
         while(testIter.hasNext()){
             DataSet t = testIter.next();
@@ -98,7 +100,7 @@ public class MLPClassifierLinear {
         }
 
         //Print the evaluation statistics
-        System.out.println(eval.stats());
+        log.info(eval.stats());
 
 
         //------------------------------------------------------------------------------------
