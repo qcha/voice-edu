@@ -9,28 +9,34 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import static recorder.Constants.*;
 
 public class CreateDataSet {
-    private float sampleRate = FREQUENCY; //Частота дискретизации у каждой записи своя - если ошибку выдает - то подписывает, какую надо выставить
+    private static float sampleRate = FREQUENCY; //Частота дискретизации у каждой записи своя - если ошибку выдает - то подписывает, какую надо выставить
+    private static Set<String> numOutputs = new HashSet<>(); //кол-во классов (голосов) кол-во голосов для распознования (в CSV файле)
 
-    public CreateDataSet() throws IOException, UnsupportedAudioFileException {
+    public static int getNumOutputs() {
+        return numOutputs.size();
+    }
+
+    /*public CreateDataSet() throws IOException, UnsupportedAudioFileException {
         //  Обучающая выборка
-        String sourceDir = System.getProperty("user.dir") + "\\src\\main\\resources";
 
         System.out.println("Create Train Set from Folder: ");
         System.out.println(PATH_TO_WAV_TRAIN);
         createCSVFile(PATH_TO_CSV_TRAIN, PATH_TO_WAV_TRAIN);
-/*
+
         System.out.println("Create Test Set from Folder: ");
         System.out.println(SOURCE_DIR + "\\wave\\test");
         String pathToWAVtest = SOURCE_DIR + "\\wave\\test";
         String pathToCSVtest = SOURCE_DIR + "\\classification\\wav_data_eval.csv";
-        createCSVFile(pathToCSVtest, pathToWAVtest);*/
-    }
+        createCSVFile(pathToCSVtest, pathToWAVtest);
+    }*/
 
-    private void createCSVFile(String pathToCSV, String pathToWAV)
+    public static void createCSVFile(String pathToCSV, String pathToWAV)
             throws UnsupportedAudioFileException, IOException {
         File folder = new File(pathToWAV);
         try (FileWriter writer = new FileWriter(pathToCSV)) {
@@ -38,7 +44,8 @@ public class CreateDataSet {
             File[] folderEntries = folder.listFiles();
             for (File entry : folderEntries) {
                 int userKey = Character.getNumericValue(entry.getName().charAt(0));
-                System.out.println("take " + entry.getName() + " - class of speaker is #" + String.valueOf(userKey - 1));
+                numOutputs.add(String.valueOf(userKey - 1));
+                System.out.println("take " + entry.getName() + " - class of speaker is #" + (userKey - 1));
                 double[] audioSample = convertFileToDoubleArray(entry);
                 double[] q = extractFeatures(audioSample);
 
@@ -54,7 +61,7 @@ public class CreateDataSet {
     }
 
 
-    private double[] convertFileToDoubleArray(File voiceSampleFile)
+    private static double[] convertFileToDoubleArray(File voiceSampleFile)
             throws UnsupportedAudioFileException, IOException {
 
         AudioInputStream sample = AudioSystem.getAudioInputStream(voiceSampleFile);
@@ -67,12 +74,12 @@ public class CreateDataSet {
         return FileHelper.readAudioInputStream(sample);
     }
 
-    private double[] extractFeatures(double[] voiceSample) {
+    private static double[] extractFeatures(double[] voiceSample) {
 
         AutocorrellatedVoiceActivityDetector voiceDetector = new AutocorrellatedVoiceActivityDetector();
         Normalizer normalizer = new Normalizer();
-        FeaturesExtractor<double[]> lpcExtractor = new LpcFeaturesExtractor(sampleRate, 51); //poles = 500 - это количество выходных данных у одного трека
-        //то есть входящих нейронов в итоге будет 500
+        FeaturesExtractor<double[]> lpcExtractor = new LpcFeaturesExtractor(sampleRate, NEURONS + 1); //poles = 51 - это количество выходных данных у одного трека
+        //то есть входящих нейронов в итоге будет 50
         voiceDetector.removeSilence(voiceSample, sampleRate);
         normalizer.normalize(voiceSample, sampleRate);
         double[] lpcFeatures = lpcExtractor.extractFeatures(voiceSample);

@@ -10,12 +10,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.deeplearning4j.examples.feedforward.classification.CreateDataSet;
+import org.deeplearning4j.examples.feedforward.classification.MLPClassifierLinear;
 import view.recorder.VoiceRecorderView;
 import view.recorder.VoiceRecorderViewModel;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static recorder.Constants.PATH_TO_CSV_TRAIN;
+import static recorder.Constants.PATH_TO_WAV_TRAIN;
 
 public class MainView extends GridPane {
     private final MainViewModel viewModel;
@@ -125,10 +129,22 @@ public class MainView extends GridPane {
         training.disableProperty().bind(voiceRecorderViewModel.getIsRecording());
         checking.disableProperty().bind(voiceRecorderViewModel.getIsRecording());
 
+
+
         training.setOnAction(e -> {
             try {
-                new CreateDataSet();
+                CreateDataSet.createCSVFile(PATH_TO_CSV_TRAIN, PATH_TO_WAV_TRAIN);
             } catch (IOException | UnsupportedAudioFileException e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        checking.setOnAction(e -> {
+            try {
+                if (CreateDataSet.getNumOutputs() != 0) {
+                    new MLPClassifierLinear(CreateDataSet.getNumOutputs());
+                }
+            } catch (Exception e1) {
                 e1.printStackTrace();
             }
         });

@@ -24,6 +24,8 @@ import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 
 import java.io.File;
 
+import static recorder.Constants.*;
+
 /**
  * "Linear" Data Classification Example
  *
@@ -37,28 +39,23 @@ import java.io.File;
 public class MLPClassifierLinear {
 
 
-    public static void main(String[] args) throws Exception {
+    public MLPClassifierLinear(int numOutputs) throws Exception {
         int seed = 123;
         double learningRate = 0.01; //скорость обучения
         int batchSize = 50; //Размер батча
         int nEpochs = 30; //Кол-во эпох
 
-        int numInputs = 50; //кол-во входных нейронов, зависит от структуры записи
-        int numOutputs = 3; //кол-во классов (голосов) кол-во голосов для распознования (в CSV файле)
         int numHiddenNodes = 20;//20
-
-        final String filenameTrain  = new ClassPathResource("/classification/wav_data_train.csv").getFile().getPath(); //обучающая выборка
-        final String filenameTest  = new ClassPathResource("/classification/wav_data_eval.csv").getFile().getPath(); //текстовая выборка
 
         //Load the training data:
         RecordReader rr = new CSVRecordReader();
 //        rr.initialize(new FileSplit(new File("src/main/resources/classification/linear_data_train.csv")));
-        rr.initialize(new FileSplit(new File(filenameTrain)));
+        rr.initialize(new FileSplit(new File(PATH_TO_CSV_TRAIN)));
         DataSetIterator trainIter = new RecordReaderDataSetIterator(rr,batchSize,0,numOutputs);
 
         //Load the test/evaluation data:
         RecordReader rrTest = new CSVRecordReader();
-        rrTest.initialize(new FileSplit(new File(filenameTest)));
+        rrTest.initialize(new FileSplit(new File(PATH_TO_CSV_TEST)));
         DataSetIterator testIter = new RecordReaderDataSetIterator(rrTest,batchSize,0,numOutputs);
 
         MultiLayerConfiguration conf = new NeuralNetConfiguration.Builder()
@@ -68,7 +65,7 @@ public class MLPClassifierLinear {
                 .learningRate(learningRate)
                 .updater(Updater.NESTEROVS).momentum(0.9)
                 .list()
-                .layer(0, new DenseLayer.Builder().nIn(numInputs).nOut(numHiddenNodes)
+                .layer(0, new DenseLayer.Builder().nIn(NEURONS).nOut(numHiddenNodes)
                         .weightInit(WeightInit.XAVIER)
                         .activation(Activation.RELU)
                         .build())

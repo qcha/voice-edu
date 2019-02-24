@@ -21,4 +21,8 @@ public final class Constants {
     public final static String SOURCE_DIR = System.getProperty("user.dir") + "\\src\\main\\resources";
     public final static String PATH_TO_WAV_TRAIN = SOURCE_DIR + "\\wave";
     public final static String PATH_TO_CSV_TRAIN = SOURCE_DIR + "\\classification\\wav_data_train.csv";
+    public final static String PATH_TO_WAV_TEST = SOURCE_DIR + "\\wave\\test";
+    public final static String PATH_TO_CSV_TEST = SOURCE_DIR + "\\classification\\wav_data_eval.csv";
+
+    public final static int NEURONS = 50; //кол-во входных нейронов, зависит от структуры записи
 }
