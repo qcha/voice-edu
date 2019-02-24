@@ -16,6 +16,7 @@ public class MainWindow extends Application {
         Scene scene = new Scene(view);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
+        primaryStage.setOnCloseRequest(e -> System.exit(0));
         primaryStage.show();
     }
 }
