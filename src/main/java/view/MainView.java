@@ -160,8 +160,12 @@ public class MainView extends GridPane {
         checking.setOnAction(e -> {
             Thread t = new Thread(() -> {
                 try {
-                    log.info("Starting...");
-                    new MLPClassifierLinear(CreateDataSet.getNumOutputs());
+                    if (CreateDataSet.getNumOutputs() != 0) {
+                        log.info("Starting...");
+                        new MLPClassifierLinear(CreateDataSet.getNumOutputs());
+                    } else {
+                        log.info("Please push \"Train\"");
+                    }
                 } catch (Exception e1) {
                     log.error("Error: {}", e1);
                 }
